@@ -1,0 +1,19 @@
+{
+  "name": "packedio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EndCrystal/PackedIO_JS.git"
+  },
+  "author": "CodeHz",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/EndCrystal/PackedIO_JS/issues"
+  },
+  "homepage": "https://github.com/EndCrystal/PackedIO_JS#readme",
+  "devDependencies": {
+    "typescript": "^3.6.2"
+  }
+}

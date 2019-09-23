@@ -264,3 +264,8 @@ export class Input {
     return ret;
   }
 }
+
+export interface Serializable {
+  Load(i: Input): void
+  Save(o: Output): void
+}

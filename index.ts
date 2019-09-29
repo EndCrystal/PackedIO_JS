@@ -246,36 +246,36 @@ export class Input {
     return ret;
   }
 
-  iterateArray(feedback: (bi: Input, i: number) => void) {
+  iterateArray(feedback: (i: number) => void) {
     const len = this.readVarUint32();
     for (let i = 0; i < len; i++) {
-      feedback(this, i);
+      feedback(i);
     }
   }
 
-  readArray<T>(cvt: (bi: Input, i: number) => T): T[] {
+  readArray<T>(cvt: (i: number) => T): T[] {
     const len = this.readVarUint32();
     const ret = [] as T[];
     for (let i = 0; i < len; i++) {
-      ret.push(cvt(this, i));
+      ret.push(cvt(i));
     }
     return ret;
   }
 
-  iterateObject(feedback: (key: string, bi: Input) => void) {
+  iterateObject(feedback: (key: string) => void) {
     const len = this.readVarUint32();
     for (let i = 0; i < len; i++) {
       const key = this.readString();
-      feedback(key, this);
+      feedback(key);
     }
   }
 
-  readObject<T>(cvt: (key: string, bi: Input) => T): { [index: string]: T } {
+  readObject<T>(cvt: (key: string) => T): { [index: string]: T } {
     const len = this.readVarUint32();
     const ret = {} as { [index: string]: T };
     for (let i = 0; i < len; i++) {
       const key = this.readString();
-      ret[key] = cvt(key, this);
+      ret[key] = cvt(key);
     }
     return ret;
   }

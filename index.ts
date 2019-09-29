@@ -8,7 +8,8 @@ type VarValue =
   | { int32: number }
   | { varuint32: number }
   | { float: number }
-  | { double: number };
+  | { double: number }
+  | { raw: DataView };
 
 function sizeVarUint32(num: number): number {
   return num < 0x80 ? 1 : num < 0x4000 ? 2 : num < 0x200000 ? 3 : num < 0x10000000 ? 4 : 5;
@@ -64,6 +65,11 @@ function writeValue(value: VarValue, view: DataView, pos: number): number {
   } else if ("double" in value) {
     view.setFloat64(pos, value.double);
     return pos + 8;
+  } else if ("raw" in value) {
+    new Uint8Array(view.buffer, pos, value.raw.byteLength).set(
+      new Uint8Array(value.raw.buffer, value.raw.byteOffset, value.raw.byteLength)
+    );
+    return pos + value.raw.byteLength;
   }
 }
 
@@ -142,6 +148,16 @@ export class Output {
       this.pushString(k);
       feedback(k, v, this);
     }
+  }
+
+  pushBytes(value: DataView) {
+    this.pushVarUInt32(value.byteLength);
+    this.pushFixedBytes(value);
+  }
+
+  pushFixedBytes(value: DataView) {
+    this.cache.push({ raw: value });
+    this.length += value.byteLength;
   }
 
   write(): ArrayBuffer {
@@ -263,9 +279,19 @@ export class Input {
     }
     return ret;
   }
+
+  readBytes(): ArrayBuffer {
+    return this.readFixedBytes(this.readVarUint32())
+  }
+
+  readFixedBytes(length: number): ArrayBuffer {
+    const ret = new ArrayBuffer(length)
+    new Uint8Array(ret).set(new Uint8Array(this.data.buffer, this.pos, length))
+    return ret
+  }
 }
 
 export interface Serializable {
-  Load(i: Input): void
-  Save(o: Output): void
+  Load(i: Input): void;
+  Save(o: Output): void;
 }

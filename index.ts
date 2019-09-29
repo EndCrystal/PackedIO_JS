@@ -44,16 +44,16 @@ function writeValue(value: VarValue, view: DataView, pos: number): number {
     view.setInt8(pos, value.int8);
     return pos + 1;
   } else if ("uint16" in value) {
-    view.setUint16(pos, value.uint16);
+    view.setUint16(pos, value.uint16, true);
     return pos + 2;
   } else if ("int16" in value) {
-    view.setInt16(pos, value.int16);
+    view.setInt16(pos, value.int16, true);
     return pos + 2;
   } else if ("uint32" in value) {
-    view.setUint32(pos, value.uint32);
+    view.setUint32(pos, value.uint32, true);
     return pos + 4;
   } else if ("int32" in value) {
-    view.setInt32(pos, value.int32);
+    view.setInt32(pos, value.int32, true);
     return pos + 4;
   } else if ("varuint32" in value) {
     return writeVarUint32(value.varuint32, view, pos);
@@ -186,12 +186,12 @@ export class Input {
     return this.data.getUint8(this.pos++);
   }
   readUint16(): number {
-    const ret = this.data.getUint16(this.pos);
+    const ret = this.data.getUint16(this.pos, true);
     this.pos += 2;
     return ret;
   }
   readUint32(): number {
-    const ret = this.data.getUint32(this.pos);
+    const ret = this.data.getUint32(this.pos, true);
     this.pos += 4;
     return ret;
   }
@@ -200,12 +200,12 @@ export class Input {
     return this.data.getInt8(this.pos++);
   }
   readInt16(): number {
-    const ret = this.data.getInt16(this.pos);
+    const ret = this.data.getInt16(this.pos, true);
     this.pos += 2;
     return ret;
   }
   readInt32(): number {
-    const ret = this.data.getInt32(this.pos);
+    const ret = this.data.getInt32(this.pos, true);
     this.pos += 4;
     return ret;
   }
@@ -228,13 +228,13 @@ export class Input {
   }
 
   readFloat(): number {
-    const ret = this.data.getFloat32(this.pos);
+    const ret = this.data.getFloat32(this.pos, true);
     this.pos += 4;
     return ret;
   }
 
   readDouble(): number {
-    const ret = this.data.getFloat64(this.pos);
+    const ret = this.data.getFloat64(this.pos, true);
     this.pos += 8;
     return ret;
   }

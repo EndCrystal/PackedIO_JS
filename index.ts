@@ -44,16 +44,16 @@ function writeValue(value: VarValue, view: DataView, pos: number): number {
     view.setInt8(pos, value.int8);
     return pos + 1;
   } else if ("uint16" in value) {
-    view.setUint16(pos, value.uint16, true);
+    view.setUint16(pos, value.uint16);
     return pos + 2;
   } else if ("int16" in value) {
-    view.setInt16(pos, value.int16, true);
+    view.setInt16(pos, value.int16);
     return pos + 2;
   } else if ("uint32" in value) {
-    view.setUint32(pos, value.uint32, true);
+    view.setUint32(pos, value.uint32);
     return pos + 4;
   } else if ("int32" in value) {
-    view.setInt32(pos, value.int32, true);
+    view.setInt32(pos, value.int32);
     return pos + 4;
   } else if ("varuint32" in value) {
     return writeVarUint32(value.varuint32, view, pos);

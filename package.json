@@ -1,8 +1,9 @@
 {
-  "name": "packedio",
+  "name": "@EndCrystal/PackedIO_JS",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EndCrystal/PackedIO_JS.git"
